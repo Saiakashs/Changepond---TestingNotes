@@ -1,0 +1,116 @@
+Mocha and Chai
+1.Create a folder, open cmd in it, type following commands
+ 
+npm init –y ------hey npm initialize project for me.
+ 
+npm i mocha chai -------- To install dependencies for mocha and chai.
+ 
+2.Open folder in VS-code
+Open package.json file and type test : ‘mocha’ and save it. Every time you make changes save it compulsory
+ 
+3.Create a src and test folder
+create a app.js class under src folder
+create a app.spec.js OR app.test.js class under test folder
+ 
+4.Note : First open vs code and install some extensions
+Chai snippets and mocha snippets
+ 
+5.Add functions created on webpage = app.js (Add functions and export the same)
+Add test BDD/TDD = app.test.js
+ 
+6.Follow the steps while writing testcase based on BDD/TDD as below
+a)Write tests into test file using ‘Describe’ and ‘It’ blocks – BDD or ‘Context’ and ‘Specify’
+b)Write tests into test file using ‘Suite’ and ‘Test’ blocks – TDD
+c)Run Tests using npm test.
+has context menu
+
+
+
+Code link:  https://mochajs.org/
+
+Process of TDD :
+
+Add test case
+
+Run the test cases and watch test fails
+
+Update the code
+
+Run the test cases again
+
+Refactor the code (Optional)
+
+Repeat the steps for another test case
+
+Process of BDD :
+ 
+Write the behavior of the application
+
+Write the automated scripts
+
+Then Implement the functional code
+
+Check if the behavior is successful and if it not successful then fix it
+
+Organize the code (Optional)
+
+Repeat the steps for another behavior
+
+Test Driven Development (TDD) is a development technique which focuses more on the implementation of a feature of a software application/product.  Mainly it refers to write a test case that fails because the specified functionality doesn’t exist and after that update the code that can make the test case pass and as a result we get the feature implemented in the system. Actually it is a development practice where the developers are involved in it.
+
+Behavior Driven Development (BDD) is a development technique that focuses more on a software application’s behavior. Mainly it creates an executable specification that fails because the respective feature doesn’t exist, then writing the simplest code that can make the specification pass, and as a result we get the required behavior implemented in the system.  Actually it is a team methodology where Developers, Customers, and QAs are involved in it.
+ 
+Notes given
+ 
+ 
+Mainly it creates an executable specification that fails because the respective feature doesn’t exist, then writing the simplest code that can make the specification pass and as a result we get the
+ required behavior implemented in the system.
+
+
+Its main focus is on system requirements.
+
+
+In BDD the starting point is a scenario.
+
+
+It is a team methodology.
+
+
+Here language used to write behavior/scenarios is simple English language.
+
+
+In BDD collaboration is required between all the stakeholders.
+
+
+It is a good approach for project development which are driven by user actions.
+
+
+Some of the tools used are  Cucumber, Dave, JBehave, Spec Flow,  Concordian, BeanSpec etc.
+ 
+ 
+ 
+Mainly it refers to write a test case that fails because the specified functionality doesn’t exist and after that update the code that can make the test case pass and as a result we get the feature
+ implemented in the system.
+
+
+Its main focus is on unit test.
+
+
+In TDD the starting point is a test case.
+
+
+It is a development practice.
+
+
+Here language is used is similar to the one used for feature development like programming language.
+
+
+In TDD collaboration is required only between the developers.
+
+
+It is a good approach for projects which involve API and third-party tools.
+
+
+Some of the tools used are  JBehave, JDave, Cucumber, Spec Flow, BeanSpec, FitNesse etc.
+ 
+ 

@@ -1,0 +1,27 @@
+
+JUNIT Notes
+
+1. assertEquals(expected, actual) = Asserts that expected and actual are equal.
+
+2.	assertArrayEquals(expectedArray, actualArray) = Verifies each item in the arrays equal in the   right position
+
+3.	assertIterableEquals(expectedArray, actualArray) = Verifies each item in the iterable are equal in the correspoinding positions
+
+
+1. @Test = Marks a method as a test
+
+            = Informs the Junit engine what methods need to run
+
+ 3. The green bar = status of your execution/Test pass or fail 
+
+Validation of the result = expected vs actual we are going to validate it.
+
+ Asserting exceptions with assertThrows
+
+When you want your method should throw some exception then you can use, assertThrows .
+
+In the Java testing framework, JUnit 5 is the latest testing framework that introduces a robust test lifecycle that is managed through four primary annotations that are @BeforeAll, @BeforeEach, @AfterEach, and @AfterAll. We need to annotate each method with @Test annotation from the org.junit.jupiter.api package.
+ 
+ 
+@TestInstance is used to configure the lifecycle of test instances for the annotated test class or test interface: PER_CLASS : A new test instance will be created once per test class. PER_METHOD : A new test instance will be created for each test method, test factory method, or test template method.
+ 

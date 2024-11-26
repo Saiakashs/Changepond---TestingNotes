@@ -1,0 +1,3 @@
+Download the 148MB setup.exe file
+
+https://github.com/appium/appium-desktop/releases/tag/v1.8.2

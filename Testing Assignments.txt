@@ -1,0 +1,8 @@
+1)RestAssurred - Test any 5 api's push code on git_hub
+ 
+2)Junit - Unit test cases Feedback form on Quiz App - push it on git_hub
+
+3)Mocha and chai - Employee Registeration testcases on both TDD or BDD Framework - push it on github
+
+4)Write BDD testcases for Login SAcenario of Quiz App and Test 10 username and password 
+pair.generate a HTML Report for it. Push it on github.

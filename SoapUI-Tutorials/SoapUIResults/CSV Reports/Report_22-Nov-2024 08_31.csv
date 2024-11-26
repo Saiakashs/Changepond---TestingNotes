@@ -1,0 +1,8 @@
+"Test Suite","Test Case","Test Step","Step Type","Step Status","Result message","Execution Date"
+"Quiz App API TestSuite","/user/ TestCase","Request 1","restrequest","FAILED","Message:[Contains 4] Missing token [fname] in Response
+Message:[Contains 5] Missing token [Trainer] in Response
+Message:[Contains 6] Missing token [Pande] in Response
+Message:[Contains 7] Missing token ["Rutuja"] in Response
+Message:[Contains 8] Missing token [female] in Response
+Message:[Contains 10] Missing token [admin@gmail.com] in Response
+","22-Nov-2024 08_31",

@@ -1,0 +1,232 @@
+//Create class in the name of LoginandRegisterationApiTest
+
+package com.APItest;
+import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.simple.JSONObject;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+ 
+public class LoginandRegistrationApiTest {
+	
+	@Test
+	
+	public void GET_LoginPage(){
+		Response response = get("http://quiz-fe.hematitecorp.com/");
+		
+		System.out.println(response.getStatusCode());
+		System.out.println(response.getTime());
+		System.out.println(response.getBody().asString());
+		System.out.println(response.getStatusLine());
+		System.out.println(response.getHeader("content-type"));
+		System.out.println(response.getHeader("User-Agent"));
+		System.out.println(response.getHeader("Host"));
+		System.out.println(response.getHeader("Connection"));
+		
+		int statusCode = response.getStatusCode();
+		
+		Assert.assertEquals(statusCode, 200);  
+
+
+
+		
+	}
+	
+	@Test
+	public void GET_Student_registration() {
+		
+		Response response = get("http://quiz-fe.hematitecorp.com/#/student-registration");
+		
+		System.out.println(response.getStatusCode());
+		System.out.println(response.getTime());
+		System.out.println(response.getBody().asString());
+		System.out.println(response.getStatusLine());
+		System.out.println(response.getHeader("content-type"));
+		System.out.println(response.getHeader("User-Agent"));
+		System.out.println(response.getHeader("Host"));
+		System.out.println(response.getHeader("Connection"));
+		
+		int statusCode = response.getStatusCode();
+		
+		Assert.assertEquals(statusCode, 200);
+		
+	}
+	
+	
+	@Test
+	public void testPost(){
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+//	map.put("name", "Monica");
+//	map.put("job", "Trainer");
+//	
+//	System.out.println(map);
+	
+	JSONObject request = new JSONObject(map);
+	
+	request.put("fname", "SaiS");
+	request.put("lname", "Srinivasan");
+	request.put("contact", "9360335900");
+	request.put("email", "saiakash@gmail.com");
+	request.put("gender", "male");
+	request.put("role", "student");
+	
+	System.out.println(request.toJSONString());
+	
+	baseURI = "http://quiz-be-test.hematitecorp.com";
+	
+	given().
+	header("Content-Type", "application/json").//you should know header of your json response.
+	contentType(ContentType.JSON).accept(ContentType.JSON). //explicitly telling to server that my content type is json
+	body(request.toJSONString()).
+	post("/api/user/").then().statusCode(200).log().all();
+	
+	}
+
+}
+
+
+
+
+//Create a class in the name of PutPatchAndDeleteQuizApp
+
+package com.APItest;
+import static io.restassured.RestAssured.given;
+
+import javax.annotation.meta.When;
+
+import org.json.simple.JSONObject;
+import org.testng.annotations.Test;
+
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+
+public class PutPatchAndDeleteQuizApp {
+	
+	@Test
+	public void testPut() {
+		// Create the JSON object for the PUT request
+		JSONObject request = new JSONObject();
+		request.put("fname", "SaiKutthalingamS");
+		request.put("lname", "Srinivasan");
+		request.put("contact", "9360335900");
+		request.put("email", "saiakash@gmail.com");
+		request.put("gender", "male");
+		request.put("role", "Student");
+ 
+		// Perform the PUT request using the token
+		RestAssured.baseURI = "http://quiz-be-test.hematitecorp.com";
+ 
+		given().
+		header("Content-Type", "application/json").
+		header("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMxNTA1NDcyLCJpYXQiOjE3MzE0ODk4NzIsImp0aSI6ImMwM2M2YzI1Y2M1YTRlZGU5YjU4Mjk3Y2M1MDI1MTFlIiwidXNlcl9pZCI6Mn0.ciV9UII7uh5TYtRMOH-_NooohAqOp1TDpbCqfG38TX4"). // Add the token to the Authorization header
+		contentType(ContentType.JSON).
+		accept(ContentType.JSON).
+		body(request.toJSONString()).
+		put("/api/user/employee/").
+		then().
+		statusCode(200).
+		log().all();
+	}
+ 
+	@Test
+	public void testDelete() {
+		
+		//for delete we don't require body
+		
+		RestAssured.baseURI = "https://reqres.in";
+		
+		When().
+		delete("/api/users?page=2").then().statusCode(204).log().all();
+
+	}
+
+	private RestAssured When() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+ 
+	
+
+}
+
+
+//Create a class in the name of TestQuizAppwithAssertion
+
+package com.APItest;
+ 
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
+ 
+import org.testng.Assert;
+import org.testng.annotations.Test;
+ 
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+ 
+public class TestQuizAppwithAssertion {
+ 
+    @Test
+    public void test_1() {
+        // GET request to the API
+        Response response = get("http://quiz-be-test.hematitecorp.com/api/user/");
+        
+        // Print response details
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Time: " + response.getTime() + "ms");
+        System.out.println("Response Body: " + response.getBody().asString());
+        System.out.println("Status Line: " + response.getStatusLine());
+        System.out.println("Content-Type Header: " + response.getHeader("content-type"));
+        
+        // Assert the status code is 200
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, 200, "Expected status code 200 but found: " + statusCode);
+    }
+ 
+    @Test
+    public void test_2() {
+        // Base URI setup
+        baseURI = "http://quiz-be-test.hematitecorp.com";
+ 
+        // GET request and assertions
+        given()
+            .get("/api/user/")
+        .then()
+            .statusCode(200) // Validate status code
+            .body("data[2].id", equalTo(17)) // Validate specific JSON data
+            .log().all(); // Log response details
+ 
+        // Optional alternative:
+        // Uncomment the below line if `data[105].email` is present in the response:
+        // .body("data[105].email", equalTo("loki@gmail.com"));
+    }
+}
+
+
+//Create a class and put below code inside it
+
+@Test
+	public void testGet1() {
+	
+	baseURI = "http://localhost:3000";
+	
+	given().get("/posts").
+	
+	then().
+	
+	assertThat().body(matchesJsonSchemaInClasspath("schema.json")).statusCode(200);
+	
+	}
+
+
+//change endpoints db.json file  that you will add here
