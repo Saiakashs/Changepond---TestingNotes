@@ -1,0 +1,26 @@
+Mocha and Chai
+1.Create a folder, open cmd in it, type following commands
+ 
+npm init –y ------hey npm initialize project for me.
+ 
+npm i mocha chai -------- To install dependencies for mocha and chai.
+ 
+2.Open folder in VS-code
+Open package.json file and type test : ‘mocha’ and save it. Every time you make changes save it compulsory
+ 
+3.Create a src and test folder
+create a app.js class under src folder
+create a app.spec.js OR app.test.js class under test folder
+ 
+4.Note : First open vs code and install some extensions
+Chai snippets and mocha snippets
+ 
+5.Add functions created on webpage = app.js (Add functions and export the same)
+Add test BDD/TDD = app.test.js
+ 
+6.Follow the steps while writing testcase based on BDD/TDD as below
+a)Write tests into test file using ‘Describe’ and ‘It’ blocks – BDD or ‘Context’ and ‘Specify’
+b)Write tests into test file using ‘Suite’ and ‘Test’ blocks – TDD
+c)Run Tests using npm test.
+has context menu
+

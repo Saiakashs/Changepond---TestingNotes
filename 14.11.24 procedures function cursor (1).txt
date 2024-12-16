@@ -1,0 +1,394 @@
+--- Procedures ---
+
+
+-- SAMPLE PROCEDURE
+delimiter //
+	
+	create procedure getallcustomers()
+	begin
+		select * from customers;
+	end//
+	
+delimiter ;
+
+
+
+-- WITH IN PARAMETER
+delimiter //
+	
+	create procedure getallcustomers(
+		in statename varchar(50)
+	)
+	begin
+		select * from customers where state = statename;
+	end//
+	
+delimiter ;
+
+
+
+-- IN AND OUT PARAMETER
+delimiter //
+	
+	create procedure getallcustomers(
+		in countryname varchar(50),
+		out totalcustomercount int
+	)
+	begin
+		select count(customerNumber) into totalcustomercount
+		from customers
+		where country = countryname;
+	end//
+	
+delimiter ;
+
+
+call getallcustomers("usa", @total);
+select @total;
+
+
+
+
+
+
+
+-- TWO IN PARAMETER
+delimiter //
+	
+	create procedure getallcustomers(
+		in countryname varchar(50),
+		in statename varchar(50)
+	)
+	begin
+		select customername, country, state 
+		from customers
+		where country = countryname
+		and state = statename;
+	end//
+	
+delimiter ;
+
+
+call getallcustomers("usa", 'ca');
+
+
+
+
+
+-- TWO IN AND ONE OUT PARAMETER
+delimiter //
+	
+	create procedure getallcustomers(
+		in countryname varchar(50),
+		in statename varchar(50),
+		out totalcount int
+	)
+	begin
+		select count(customerName) into totalcount
+		from customers
+		where country = countryname
+		and state = statename;
+	end//
+	
+delimiter ;
+
+
+call getallcustomers("usa", 'ca', @totalcount);
+select @totalcount;
+
+
+
+
+
+
+-- INOUT PARAMETER
+delimiter //
+	
+	create procedure counter (
+		inout num int,
+		in increment int
+	)
+	begin	  
+		
+		set num = num +increment;
+		
+	end//
+	
+delimiter ;
+
+set @counter = 0;
+
+call counter(@counter, 2);
+
+select @counter;
+
+
+
+
+
+
+
+-- IF ELSE STATEMENT
+delimiter //
+	
+	create procedure getCustomerLevel (
+		in custnum int,
+		out custlevel varchar(50),
+		out custname varchar(50)
+	)
+	begin	  
+		
+		declare credit int default 0;	  
+		
+		select creditLimit, customerName into credit, custname
+		from customers
+		where customerNumber = custnum;
+		
+		if credit > 5000 then
+			set custlevel = 'platnum';
+		elseif credit >1000 and credit <= 5000 then
+			set custlevel = "gold";
+		else 
+			set custlevel = 'silver' ;
+		end if;	   
+		
+		
+		
+	end //
+	
+delimiter ;
+
+call getCustomerLevel(406, @custlevel, @custname);
+select @custlevel Level, @custname Name;
+
+
+
+
+
+
+-- TASK
+-- findout total orders between two days, total sale happend in betwwen the date
+delimiter &&
+
+	create procedure getDetailsBetween(
+		in fromDate date,
+		in toDate date,
+		out totalorder int,
+		out totalsales int
+	)
+	begin
+		
+		select count(distinct orderNumber), sum(quantityOrdered*priceEach) into totalorder, totalsales
+		from orders o
+		inner join orderdetails using(orderNumber)
+		where o.orderDate 
+		between fromDate and toDate;
+		
+	end &&
+	
+delimiter ;
+
+set 
+@fromDate = '2003-01-01', 
+@toDate = '2003-03-30';
+
+call getDetailsBetween(@fromDate, @toDate, @totalOrder, @totalSales);
+
+select @totalOrder, @totalSales;
+
+
+
+
+
+
+
+
+
+
+
+--- FUNCTIONS ---
+
+
+
+-- FUNCTION TO GET CUSTOMER LEVEL USING THE CREDIT LIMIT IN CUSTOMERS TABLE
+delimiter //
+	
+	create function getCustomerLevel (
+		custnum int
+	)
+	returns varchar(20) deterministic
+	
+	begin	  
+		
+		declare credit int default 0;	  
+		
+		select creditLimit into credit
+		from customers
+		where customerNumber = custnum;
+		
+		if credit > 5000 then
+			return('platnum');
+		elseif credit >1000 and credit <= 5000 then
+			return("gold");
+		else 
+			return('silver' );
+		end if;	   
+		
+		
+		
+	end //
+	
+delimiter ;
+
+select customerName, creditLimit, getCustomerLevel(creditLimit)
+from customers;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- CURSOR ---
+
+
+
+-- CURSOR TO INSERT THE EMAILS FORM EMPLOYEES TABLE TO A NEW TABLE USING CURSOR
+-- create a email list from customers table 
+create table broadcastlist(
+  emails varchar(50)
+);
+
+
+delimiter &&
+
+	create procedure allEmail(
+	  inout email_list text
+	)
+	begin
+	  declare done bool default false;
+	  declare email_address varchar(50) default '';
+	  
+	  declare cur cursor for select email from employees;
+	  
+	  declare continue handler
+	  for not found set done = true;
+	  
+	  delete from broadcastlist;
+	  
+	  open cur;
+	  
+	  process_email : loop
+	  fetch cur into email_address;
+	  if done = true then 
+	    leave process_email;
+	   end if;
+	   
+	   insert into broadcastlist values (email_address);
+	   
+	   set email_list = concat(email_address,";",email_list);
+	   
+	   end loop;
+	   close cur;
+	   end &&
+	 delimiter ;
+	  
+
+set @emailList = '';
+
+call allEmail(@emailList);
+
+select @emailList;
+
+select * from broadcastlist;
+
+
+
+
+
+
+
+
+	  
+
+
+
+-- TASK
+
+
+-- create a table with startdate, enddate, sate, ordercount, totalsales.
+create table statuses (
+  Start_Date date,
+  End_Date Date,
+  Status varchar(20),
+  Order_Count int,
+  Total_Sales int
+);
+
+
+
+delimiter &&
+
+	create procedure allStatus(
+	  fromDate date,
+	  toDate date
+	)
+	
+	begin
+	
+	  declare done bool default false;
+	  declare cur_status varchar(50) default '';
+	  declare cur_count varchar(50) default '';
+	  declare cur_sales varchar(50) default '';
+	  
+	  declare cur cursor for 
+	  select status , count(distinct orderNumber), sum(quantityOrdered*priceEach)
+	  from orders o
+	  inner join orderdetails OD using (orderNumber)
+	  where orderDate between fromDate and toDate
+	  group by status;
+	  
+	  declare continue handler
+	  for not found set done = true;
+	  
+	  delete from statuses;
+	  
+	  open cur;
+	  
+	  process_status : loop
+	  
+	  fetch cur into cur_status, cur_count, cur_sales;
+	 
+	  if done = true then 
+	    leave process_status;
+	  end if;
+	   
+	   insert into statuses 
+	   values (fromDate, toDate, cur_status, cur_count, cur_sales);
+	   
+	   end loop;
+	   
+	   close cur;
+	   
+  end &&
+	 
+delimiter ;
+	  
+
+
+
+call allStatus('2003-01-01', '2005-05-31');
+
+
+
+select * from statuses;
+
+

@@ -1,0 +1,73 @@
+http://quiz-be-test.hematitecorp.com/swagger/?format=openapi
+
+
+jmeter -n -t "C:\Users\karthik.shanmugam\Documents\TESTING FILES\GreenSchool.jmx" -l "C:\Users\karthik.shanmugam\Desktop\EXCEL\greenschool.csv" -e -o "C:\Users\karthik.shanmugam\Desktop\Result\HTML_REPORT"
+
+http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL
+
+https://community.smartbear.com/discussions/SoapUI_OS/sample-wsdl-for-practice/210956
+
+http://www.dneonline.com/calculator.asmx?wsdl
+
+
+
+Assignment:
+
+ add this wsdl in soapui 
+ project and add testsuite--->testcases--->teststeps--> add assertions for add, sub, mul, div api's 
+ and then create a documentation for this project
+ 
+ http://www.dneonline.com/calculator.asmx?wsdl    
+ 
+ For project rest project individual test suite creation:
+ 
+ https://www.dneonline.com/calculator.asmx?op=Divide
+ 
+ its not like only for calculator we have to create, where we want to add assertions there we can create testsuite and testcase, teststeps
+ 
+ 
+ Groovy script:
+ 
+ 
+log.info "Hematite Infotech"
+ 
+def name = context.expand('${#Project#Name}')
+ 
+def name1 = context.expand('${#TestSuite#Name}')
+ 
+def name2 = context.expand('${#TestCase#Name}')
+ 
+def name3 = context.expand('${#System#user.name}')
+ 
+def name4 = context.expand('${#System#user.country}')
+ 
+def name5 = context.expand('${#Global#Name}')
+ 
+log.info("Property Name is : " +name);
+ 
+log.info("Property Name is : " +name1);
+ 
+log.info("Property Name is : " +name2);
+ 
+log.info("Property Name is : " +name3);
+ 
+log.info("Property Name is : " +name4);
+ 
+log.info("Property Name is : " +name5);
+ 
+${#TestSuite#CountryName}
+ 
+${#Project#CountryName}
+ 
+${#TestCase#CountryName}
+ 
+${TestStep#CountryName}
+ 
+${TestSuiteName#CountryName}
+ 
+${TestStepName#CountryName}
+ 
+ok mam
+ 
+
+ 

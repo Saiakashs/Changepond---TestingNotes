@@ -1,0 +1,31 @@
+pm.test("Status code is 200", function () {
+    pm.response.to.have.status(201);
+});
+ 
+console.log("Login API Working Successfully");
+console.info("As per Regression User can reset password successfully");
+console.error("Note: Only defined users succeed registration");
+console.warn("For login only Three attempts are provided, if failed try after 30 seconds.");
+ 
+pm.globals.set("name", "Hematite");
+console.log("Hematite Infotech");
+pm.collectionVariables.set("date", "19-9-1990");
+pm.environment.set("id", "HM1006");
+pm.variables.set("Address1", "Pallikarni");
+//Getting variables
+//pm.globals.get("name");
+console.log(pm.globals.get("name"));
+console.log(pm.collectionVariables.get("date"));
+console.log(pm.environment.get("id"));
+console.log(pm.variables.get("Address1"));
+ 
+Local variables access any variable including local based on pripority
+ 
+Pripority 1.Local, 2. Data, 3.Env, 4.Collection
+ 
+5. Global
+ 
+pm.variables.get("name")--->When name is same key used multiple times it access it as per pripority
+ 
+In case local varible is not available then it will fetch data level value
+ 
